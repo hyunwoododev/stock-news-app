@@ -1,8 +1,50 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
+  "sourceRoot": "apps/aggregators/src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/aggregators/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/aggregators",
+  "projects": {
+    "aggregators": {
+      "type": "application",
+      "root": "apps/aggregators",
+      "entryFile": "main",
+      "sourceRoot": "apps/aggregators/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/aggregators/tsconfig.app.json"
+      }
+    },
+    "summurizer": {
+      "type": "application",
+      "root": "apps/summurizer",
+      "entryFile": "main",
+      "sourceRoot": "apps/summurizer/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/summurizer/tsconfig.app.json"
+      }
+    },
+    "issuer": {
+      "type": "application",
+      "root": "apps/issuer",
+      "entryFile": "main",
+      "sourceRoot": "apps/issuer/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/issuer/tsconfig.app.json"
+      }
+    },
+    "main-api": {
+      "type": "application",
+      "root": "apps/main-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/main-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/main-api/tsconfig.app.json"
+      }
+    }
   }
 }
