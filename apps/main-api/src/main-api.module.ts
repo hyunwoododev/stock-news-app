@@ -13,6 +13,7 @@ import { UserSchema } from './schemas/user.schema';
     ConfigModule.forRoot({
       validationSchema: joi.object({
         MONGODB_URI: joi.string().required(),
+        PORT: joi.number().required(),
       }),
       envFilePath: './apps/main-api/.env',
     }),
