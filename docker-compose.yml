@@ -7,12 +7,31 @@ services:
     command: pnpm run start:dev main-api
     env_file:
       - ./apps/main-api/.env
-    # depends_on:
-    #   - billing
-    #   - auth
-    #   - rabbitmq
+    depends_on:
+      - aggregators
+      - rabbitmq
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     ports:
       - '3000:3000'
+  aggregators:
+    build:
+      context: .
+      dockerfile: ./apps/aggregators/Dockerfile
+      target: development
+    command: pnpm run start:dev aggregators
+    env_file:
+      - ./apps/aggregators/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3001:3001'
+
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - '5672:5672'
