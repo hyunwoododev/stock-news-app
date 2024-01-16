@@ -4,6 +4,9 @@ import { MainApiService } from './main-api.service';
 import { ConfigModule } from '@nestjs/config';
 import * as joi from 'joi';
 import { DatabaseModule } from '@app/common';
+import { UsersRepository } from './user/users.repository';
+import { MongooseModule } from '@nestjs/mongoose';
+import { UserSchema } from './schemas/user.schema';
 
 @Module({
   imports: [
@@ -14,8 +17,9 @@ import { DatabaseModule } from '@app/common';
       envFilePath: './apps/main-api/.env',
     }),
     DatabaseModule,
+    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
   ],
   controllers: [MainApiController],
-  providers: [MainApiService],
+  providers: [MainApiService, UsersRepository],
 })
 export class MainApiModule {}

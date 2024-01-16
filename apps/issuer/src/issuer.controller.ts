@@ -7,6 +7,6 @@ export class IssuerController {
 
   @Get()
   getHello(): string {
-    return this.issuerService.getHello();
+    return 'hey, this is the issuer service';
   }
 }

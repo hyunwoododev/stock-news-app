@@ -7,6 +7,6 @@ export class SummurizerController {
 
   @Get()
   getHello(): string {
-    return this.summurizerService.getHello();
+    return 'hey, this is the summrize service';
   }
 }

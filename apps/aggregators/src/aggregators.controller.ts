@@ -7,6 +7,6 @@ export class AggregatorsController {
 
   @Get()
   getHello(): string {
-    return this.aggregatorsService.getHello();
+    return 'hey, this is the aggregators service';
   }
 }
