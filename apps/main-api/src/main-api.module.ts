@@ -4,7 +4,6 @@ import { MainApiService } from './main-api.service';
 import { ConfigModule } from '@nestjs/config';
 import * as joi from 'joi';
 import { DatabaseModule, RmqModule } from '@app/common';
-import { UsersRepository } from './repository/users.repository';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from '../../../libs/common/src/database/schemas/user.schema';
 import { AGGREGATOR } from '../../../libs/common/src/constants/services';
@@ -27,6 +26,6 @@ import { NewsSchema } from '@app/common/database/schemas/news.schema';
     RmqModule.register({ name: AGGREGATOR }),
   ],
   controllers: [MainApiController],
-  providers: [MainApiService, UsersRepository, NewsRepository],
+  providers: [MainApiService, NewsRepository],
 })
 export class MainApiModule {}
