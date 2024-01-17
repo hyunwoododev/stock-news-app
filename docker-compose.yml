@@ -8,6 +8,7 @@ services:
     env_file:
       - ./apps/main-api/.env
     depends_on:
+      - auth
       - aggregators
       - rabbitmq
     volumes:
@@ -15,7 +16,23 @@ services:
       - /usr/src/app/node_modules
     ports:
       - '3000:3000'
- 
+
+  auth:
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    command: pnpm run start:dev auth
+    env_file:
+      - ./apps/auth/.env
+    depends_on:
+      - rabbitmq
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3002:3002'
+
   aggregators:
     build:
       context: .

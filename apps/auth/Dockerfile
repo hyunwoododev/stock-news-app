@@ -1,16 +1,20 @@
-FROM node:alpine As development
+FROM node:20.8.0 AS development
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm install
+# Install pnpm
+RUN npm install -g pnpm
+
+# Install dependencies using pnpm
+RUN pnpm install
 
 COPY . .
 
-RUN npm run build auth
+RUN pnpm run build
 
-FROM node:alpine as production
+FROM node:20.8.0 AS production
 
 ARG NODE_ENV=production
 ENV NODE_ENV=${NODE_ENV}
@@ -19,7 +23,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm install --only=production
+RUN pnpm install --prod
 
 COPY . .
 
