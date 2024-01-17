@@ -19,24 +19,6 @@
         "tsConfigPath": "apps/aggregators/tsconfig.app.json"
       }
     },
-    "summurizer": {
-      "type": "application",
-      "root": "apps/summurizer",
-      "entryFile": "main",
-      "sourceRoot": "apps/summurizer/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/summurizer/tsconfig.app.json"
-      }
-    },
-    "issuer": {
-      "type": "application",
-      "root": "apps/issuer",
-      "entryFile": "main",
-      "sourceRoot": "apps/issuer/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/issuer/tsconfig.app.json"
-      }
-    },
     "main-api": {
       "type": "application",
       "root": "apps/main-api",
@@ -46,13 +28,13 @@
         "tsConfigPath": "apps/main-api/tsconfig.app.json"
       }
     },
-    "database": {
+    "common": {
       "type": "library",
-      "root": "libs/database",
+      "root": "libs/common",
       "entryFile": "index",
-      "sourceRoot": "libs/database/src",
+      "sourceRoot": "libs/common/src",
       "compilerOptions": {
-        "tsConfigPath": "libs/database/tsconfig.lib.json"
+        "tsConfigPath": "libs/common/tsconfig.lib.json"
       }
     }
   }
