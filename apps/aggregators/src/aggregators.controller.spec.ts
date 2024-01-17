@@ -11,7 +11,9 @@ describe('AggregatorsController', () => {
       providers: [AggregatorsService],
     }).compile();
 
-    aggregatorsController = app.get<AggregatorsController>(AggregatorsController);
+    aggregatorsController = app.get<AggregatorsController>(
+      AggregatorsController,
+    );
   });
 
   describe('root', () => {

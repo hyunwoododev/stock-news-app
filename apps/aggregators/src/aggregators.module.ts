@@ -14,7 +14,7 @@ import * as Joi from 'joi';
         RABBIT_MQ_AGGREGATOR_QUEUE: Joi.string().required(),
         PORT: Joi.number().required(),
       }),
-      envFilePath: './apps/aggregators/.env',
+      // envFilePath: './apps/aggregators/.env',
     }),
     RmqModule,
   ],

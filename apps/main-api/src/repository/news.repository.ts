@@ -1,16 +1,16 @@
 import { AbstractRepository } from '@app/common';
-import { User } from '../schemas/user.schema';
 import { InjectConnection, InjectModel } from '@nestjs/mongoose';
 import { Connection, Model } from 'mongoose';
 import { Injectable, Logger } from '@nestjs/common';
+import { News } from '@app/common/database/schemas/news.schema';
 
 @Injectable()
-export class UsersRepository extends AbstractRepository<User> {
-  protected readonly logger = new Logger(UsersRepository.name);
+export class NewsRepository extends AbstractRepository<News> {
+  protected readonly logger = new Logger(NewsRepository.name);
   constructor(
-    @InjectModel(User.name) userModel: Model<User>,
+    @InjectModel(News.name) newsModel: Model<News>,
     @InjectConnection() connection: Connection,
   ) {
-    super(userModel, connection);
+    super(newsModel, connection);
   }
 }
