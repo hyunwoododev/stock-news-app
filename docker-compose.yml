@@ -15,6 +15,7 @@ services:
       - /usr/src/app/node_modules
     ports:
       - '3000:3000'
+ 
   aggregators:
     build:
       context: .

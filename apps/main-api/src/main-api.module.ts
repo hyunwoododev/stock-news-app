@@ -8,10 +8,13 @@ import { UsersRepository } from './repository/users.repository';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from '../../../libs/common/src/database/schemas/user.schema';
 import { AGGREGATOR } from '../../../libs/common/src/constants/services';
+import { NewsRepository } from './repository/news.repository';
+import { NewsSchema } from '@app/common/database/schemas/news.schema';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
+      isGlobal: true,
       validationSchema: joi.object({
         MONGODB_URI: joi.string().required(),
         PORT: joi.number().required(),
@@ -20,9 +23,10 @@ import { AGGREGATOR } from '../../../libs/common/src/constants/services';
     }),
     DatabaseModule,
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: 'News', schema: NewsSchema }]),
     RmqModule.register({ name: AGGREGATOR }),
   ],
   controllers: [MainApiController],
-  providers: [MainApiService, UsersRepository],
+  providers: [MainApiService, UsersRepository, NewsRepository],
 })
 export class MainApiModule {}
