@@ -6,7 +6,7 @@ import * as joi from 'joi';
 import { DatabaseModule, RmqModule } from '@app/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from '../../../libs/common/src/database/schemas/user.schema';
-import { AGGREGATOR } from '../../../libs/common/src/constants/services';
+import { AGGREGATOR, AUTH } from '../../../libs/common/src/constants/services';
 import { NewsRepository } from './repository/news.repository';
 import { NewsSchema } from '@app/common/database/schemas/news.schema';
 
@@ -24,6 +24,7 @@ import { NewsSchema } from '@app/common/database/schemas/news.schema';
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
     MongooseModule.forFeature([{ name: 'News', schema: NewsSchema }]),
     RmqModule.register({ name: AGGREGATOR }),
+    RmqModule.register({ name: AUTH }),
   ],
   controllers: [MainApiController],
   providers: [MainApiService, NewsRepository],

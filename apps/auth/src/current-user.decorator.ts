@@ -10,6 +10,9 @@ export const getCurrentUserByContext = (context: ExecutionContext): User => {
   }
 };
 
+/**
+ * 현재 사용자 정보를 가져오는 데코레이터
+ */
 export const CurrentUser = createParamDecorator(
   (_data: unknown, context: ExecutionContext) =>
     getCurrentUserByContext(context),

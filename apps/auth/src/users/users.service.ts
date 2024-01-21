@@ -34,7 +34,7 @@ export class UsersService {
     }
   }
 
-  async validateUser(email: string, password: string) {
+  public async validateUser(email: string, password: string) {
     const user = await this.usersRepository.findOne({ email });
     const passwordIsValid = await bcrypt.compare(password, user.password);
     if (!passwordIsValid) {
@@ -43,7 +43,7 @@ export class UsersService {
     return user;
   }
 
-  async getUser(getUserArgs: Partial<User>) {
+  public async getUser(getUserArgs: Partial<User>) {
     return this.usersRepository.findOne(getUserArgs);
   }
 }

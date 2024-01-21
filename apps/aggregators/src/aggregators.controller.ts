@@ -11,8 +11,8 @@ export class AggregatorsController {
   ) {}
 
   @Get()
-  getHello(): string {
-    return 'hey, this is the aggregators service';
+  async sayHello() {
+    return `hey, I'm aggregators`;
   }
 
   @EventPattern('news_created')
