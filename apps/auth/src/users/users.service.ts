@@ -12,26 +12,13 @@ import { User } from './schemas/user.schema';
 export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
-  async createUser(request: CreateUserRequest) {
+  public async createUser(request: CreateUserRequest) {
     await this.validateCreateUserRequest(request);
     const user = await this.usersRepository.create({
       ...request,
       password: await bcrypt.hash(request.password, 10),
     });
     return user;
-  }
-
-  private async validateCreateUserRequest(request: CreateUserRequest) {
-    let user: User;
-    try {
-      user = await this.usersRepository.findOne({
-        email: request.email,
-      });
-    } catch (err) {}
-
-    if (user) {
-      throw new UnprocessableEntityException('Email already exists.');
-    }
   }
 
   public async validateUser(email: string, password: string) {
@@ -45,5 +32,18 @@ export class UsersService {
 
   public async getUser(getUserArgs: Partial<User>) {
     return this.usersRepository.findOne(getUserArgs);
+  }
+
+  private async validateCreateUserRequest(request: CreateUserRequest) {
+    let user: User;
+    try {
+      user = await this.usersRepository.findOne({
+        email: request.email,
+      });
+    } catch (err) {}
+
+    if (user) {
+      throw new UnprocessableEntityException('Email already exists.');
+    }
   }
 }

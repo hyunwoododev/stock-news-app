@@ -3,10 +3,10 @@ import { MainApiController } from './main-api.controller';
 import { MainApiService } from './main-api.service';
 import { ConfigModule } from '@nestjs/config';
 import * as joi from 'joi';
-import { DatabaseModule, RmqModule } from '@app/common';
+import { AuthModule, DatabaseModule, RmqModule } from '@app/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from '../../../libs/common/src/database/schemas/user.schema';
-import { AGGREGATOR, AUTH } from '../../../libs/common/src/constants/services';
+import { AGGREGATOR } from '../../../libs/common/src/constants/services';
 import { NewsRepository } from './repository/news.repository';
 import { NewsSchema } from '@app/common/database/schemas/news.schema';
 
@@ -24,7 +24,7 @@ import { NewsSchema } from '@app/common/database/schemas/news.schema';
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
     MongooseModule.forFeature([{ name: 'News', schema: NewsSchema }]),
     RmqModule.register({ name: AGGREGATOR }),
-    RmqModule.register({ name: AUTH }),
+    AuthModule,
   ],
   controllers: [MainApiController],
   providers: [MainApiService, NewsRepository],

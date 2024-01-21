@@ -1,27 +1,41 @@
 import { Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
+import {
+  Ctx,
+  EventPattern,
+  MessagePattern,
+  Payload,
+  RmqContext,
+} from '@nestjs/microservices';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './current-user.decorator';
-import JwtAuthGuard from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { User } from './users/schemas/user.schema';
+import JwtAuthGuard from './guards/jwt-auth.guard';
+import { RmqService } from '@app/common';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly rmqService: RmqService,
+  ) {}
 
   @Get()
   async sayHello() {
     return `hey, I'm auth`;
   }
 
+  @EventPattern('new_one')
+  async handleOrderCreated(@Payload() data: any, @Ctx() context: RmqContext) {
+    console.log('test success입니다');
+    this.rmqService.ack(context);
+  }
+
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(
     @CurrentUser() user: User,
-    // ({ passthrough: true })
-    // response 객체를 직접 사용할 수 있도록 하면서도 표준 처리 방식을 그대로 유지
     @Res({ passthrough: true }) response: Response,
   ) {
     await this.authService.login(user, response);
@@ -31,6 +45,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @MessagePattern('validate_user')
   async validateUser(@CurrentUser() user: User) {
+    console.log('validate_user success');
     return user;
   }
 }

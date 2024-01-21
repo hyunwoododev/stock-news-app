@@ -7,16 +7,17 @@ import {
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { catchError, Observable, tap } from 'rxjs';
-import { AUTH_SERVICE } from './services';
+import { AUTH } from '../constants/services';
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
-  constructor(@Inject(AUTH_SERVICE) private authClient: ClientProxy) {}
+  constructor(@Inject(AUTH) private authClient: ClientProxy) {}
 
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
     const authentication = this.getAuthentication(context);
+
     return this.authClient
       .send('validate_user', {
         Authentication: authentication,
@@ -26,6 +27,7 @@ export class JwtAuthGuard implements CanActivate {
           this.addUser(res, context);
         }),
         catchError(() => {
+          console.log('인증 실패');
           throw new UnauthorizedException();
         }),
       );

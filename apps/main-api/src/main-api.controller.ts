@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { MainApiService } from './main-api.service';
 import { CreateNewsRequest } from './dto/create-news.dto';
+import { JwtAuthGuard } from '@app/common';
 
 @Controller()
 export class MainApiController {
@@ -11,7 +12,13 @@ export class MainApiController {
     return `hey, I'm main-api`;
   }
 
+  @Get('/test')
+  async test() {
+    return this.mainApiService.checkAuthServiceConnection();
+  }
+
   @Post('/create-news')
+  @UseGuards(JwtAuthGuard)
   async createNews(@Body() request: CreateNewsRequest) {
     return this.mainApiService.createNews(request);
   }

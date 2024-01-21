@@ -12,7 +12,6 @@ async function bootstrap() {
 
   // set app to listen on port 3001
   const configService = app.get(ConfigService);
-  console.log('😁', configService.get('RABBIT_MQ_AGGREGATOR_QUEUE'));
   await app.listen(configService.get('PORT'));
 }
 bootstrap();
