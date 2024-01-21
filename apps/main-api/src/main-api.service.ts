@@ -13,12 +13,11 @@ export class MainApiService {
 
   async checkAuthServiceConnection() {
     await this.authServiceClient.emit('new_one', 'hihi');
+    await this.aggregatorClient.emit('new_one', 'hihi');
     return 'success';
   }
 
   async createNews(request: CreateNewsRequest) {
-    console.log('hihi');
-    return;
     const session = await this.newsRepository.startTransaction();
     try {
       const news = await this.newsRepository.create(request, { session });

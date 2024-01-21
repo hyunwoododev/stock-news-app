@@ -13,6 +13,7 @@ interface RmqModuleOptions {
 })
 export class RmqModule {
   static register({ name }: RmqModuleOptions): DynamicModule {
+    console.log(name);
     return {
       module: RmqModule,
       imports: [

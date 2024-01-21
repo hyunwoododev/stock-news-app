@@ -1,2 +1,2 @@
-export const AGGREGATOR = 'aggregators';
+export const AGGREGATOR = 'aggregator';
 export const AUTH = 'auth';

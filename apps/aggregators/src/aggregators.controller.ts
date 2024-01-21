@@ -15,6 +15,12 @@ export class AggregatorsController {
     return `hey, I'm aggregators`;
   }
 
+  @EventPattern('new_one')
+  async test(@Payload() data: any, @Ctx() context: RmqContext) {
+    console.log('test success입니다', 'aggregators');
+    this.rmqService.ack(context);
+  }
+
   @EventPattern('news_created')
   async handleOrderCreated(@Payload() data: any, @Ctx() context: RmqContext) {
     this.aggregatorsService.aggregating(data);

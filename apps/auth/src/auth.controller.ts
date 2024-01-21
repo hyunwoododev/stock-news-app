@@ -1,11 +1,5 @@
 import { Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
-import {
-  Ctx,
-  EventPattern,
-  MessagePattern,
-  Payload,
-  RmqContext,
-} from '@nestjs/microservices';
+import { EventPattern, MessagePattern } from '@nestjs/microservices';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './current-user.decorator';
@@ -27,9 +21,9 @@ export class AuthController {
   }
 
   @EventPattern('new_one')
-  async handleOrderCreated(@Payload() data: any, @Ctx() context: RmqContext) {
-    console.log('test success입니다');
-    this.rmqService.ack(context);
+  async test() {
+    console.log('test success입니다', 'auth');
+    // this.rmqService.ack(context);
   }
 
   @UseGuards(LocalAuthGuard)

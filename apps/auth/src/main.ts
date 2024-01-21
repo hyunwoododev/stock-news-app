@@ -4,6 +4,7 @@ import { AuthModule } from './auth.module';
 import { RmqOptions } from '@nestjs/microservices';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { AUTH } from '@app/common/constants/services';
 
 async function bootstrap() {
   const app = await NestFactory.create(AuthModule);
@@ -13,7 +14,7 @@ async function bootstrap() {
    * RabbitMQ Microservice를 생성하고 시작
    */
   const rmqService = app.get<RmqService>(RmqService);
-  app.connectMicroservice<RmqOptions>(rmqService.getOptions('AUTH', true));
+  app.connectMicroservice<RmqOptions>(rmqService.getOptions(AUTH, true));
   await app.startAllMicroservices();
 
   /**
