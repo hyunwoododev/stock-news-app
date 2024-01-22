@@ -8,9 +8,9 @@ phases:
     commands:
       - docker-compose build
       
-      - docker tag stock-news-app-auth:latest 339712958286.dkr.ecr.us-east-2.amazonaws.com/auth:latest
-      - docker tag stock-news-app-aggregators:latest 339712958286.dkr.ecr.us-east-2.amazonaws.com/aggregator:latest
-      - docker tag stock-news-app-main-api:latest 339712958286.dkr.ecr.us-east-2.amazonaws.com/main-api:latest
+      - docker tag src-auth:latest 339712958286.dkr.ecr.us-east-2.amazonaws.com/auth:latest
+      - docker tag src-aggregators:latest 339712958286.dkr.ecr.us-east-2.amazonaws.com/aggregator:latest
+      - docker tag src-main-api:latest 339712958286.dkr.ecr.us-east-2.amazonaws.com/main-api:latest
   post_build:
     commands:
       - docker push 339712958286.dkr.ecr.us-east-2.amazonaws.com/auth:latest
