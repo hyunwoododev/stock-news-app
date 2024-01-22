@@ -1,0 +1,18 @@
+version: 0.1
+
+phases:
+  pre_build:
+    commands:
+      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 339712958286.dkr.ecr.us-east-2.amazonaws.com
+  build:
+    commands:
+      - docker-compose build
+      
+      - docker tag stock-news-app-auth:latest 339712958286.dkr.ecr.us-east-2.amazonaws.com/auth:latest
+      - docker tag stock-news-app-aggregators:latest 339712958286.dkr.ecr.us-east-2.amazonaws.com/aggregator:latest
+      - docker tag stock-news-app-main-api:latest 339712958286.dkr.ecr.us-east-2.amazonaws.com/main-api:latest
+  post_build:
+    commands:
+      - docker push 339712958286.dkr.ecr.us-east-2.amazonaws.com/auth:latest
+      - docker push 339712958286.dkr.ecr.us-east-2.amazonaws.com/aggregator:latest
+      - docker push 339712958286.dkr.ecr.us-east-2.amazonaws.com/main-api:latest
