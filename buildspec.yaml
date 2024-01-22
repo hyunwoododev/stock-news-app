@@ -14,5 +14,5 @@ phases:
   post_build:
     commands:
       - docker push 339712958286.dkr.ecr.us-east-2.amazonaws.com/auth:latest
-      - docker push 339712958286.dkr.ecr.us-east-2.amazonaws.com/aggregator:latest
+      - docker push 339712958286.dkr.ecr.us-east-2.amazonaws.com/aggregators:latest
       - docker push 339712958286.dkr.ecr.us-east-2.amazonaws.com/main-api:latest
