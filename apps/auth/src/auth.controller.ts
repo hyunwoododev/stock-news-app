@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
-import { EventPattern, MessagePattern } from '@nestjs/microservices';
+import { MessagePattern } from '@nestjs/microservices';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './current-user.decorator';
@@ -20,12 +20,6 @@ export class AuthController {
     return `hey, I'm auth`;
   }
 
-  @EventPattern('new_one')
-  async test() {
-    console.log('test success입니다', 'auth');
-    // this.rmqService.ack(context);
-  }
-
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(
@@ -39,7 +33,6 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @MessagePattern('validate_user')
   async validateUser(@CurrentUser() user: User) {
-    console.log('validate_user success');
     return user;
   }
 }

@@ -27,7 +27,6 @@ export class JwtAuthGuard implements CanActivate {
           this.addUser(res, context);
         }),
         catchError(() => {
-          console.log('인증 실패');
           throw new UnauthorizedException();
         }),
       );

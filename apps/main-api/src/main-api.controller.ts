@@ -12,11 +12,6 @@ export class MainApiController {
     return `hey, I'm main-api`;
   }
 
-  @Get('/test')
-  async test() {
-    return this.mainApiService.checkAuthServiceConnection();
-  }
-
   @Post('/create-news')
   @UseGuards(JwtAuthGuard)
   async createNews(@Body() request: CreateNewsRequest) {

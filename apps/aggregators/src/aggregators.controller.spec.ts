@@ -15,10 +15,4 @@ describe('AggregatorsController', () => {
       AggregatorsController,
     );
   });
-
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(aggregatorsController.getHello()).toBe('Hello World!');
-    });
-  });
 });
