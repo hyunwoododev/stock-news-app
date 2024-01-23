@@ -3,19 +3,19 @@ version: 0.1
 phases:
   pre_build:
     commands:
-      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 339712958286.dkr.ecr.us-east-2.amazonaws.com
+      - aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 339712958286.dkr.ecr.ap-northeast-2.amazonaws.com
   build:
     commands:
       - docker build -t main-api:production -f ./apps/main-api/Dockerfile .
       - docker build -t aggregators:production -f ./apps/aggregators/Dockerfile .
       - docker build -t auth:production -f ./apps/auth/Dockerfile .
 
-      - docker tag main-api:production 339712958286.dkr.ecr.us-east-2.amazonaws.com/main-api:latest
-      - docker tag aggregators:production 339712958286.dkr.ecr.us-east-2.amazonaws.com/aggregators:latest
-      - docker tag auth:production 339712958286.dkr.ecr.us-east-2.amazonaws.com/auth:latest
+      - docker tag main-api:production 339712958286.dkr.ecr.ap-northeast-2.amazonaws.com/main-api:latest
+      - docker tag aggregators:production 339712958286.dkr.ecr.ap-northeast-2.amazonaws.com/aggregators:latest
+      - docker tag auth:production 339712958286.dkr.ecr.ap-northeast-2.amazonaws.com/auth:latest
 
   post_build:
     commands:
-      - docker push 339712958286.dkr.ecr.us-east-2.amazonaws.com/main-api:latest
-      - docker push 339712958286.dkr.ecr.us-east-2.amazonaws.com/aggregators:latest
-      - docker push 339712958286.dkr.ecr.us-east-2.amazonaws.com/auth:latest
+      - docker push 339712958286.dkr.ecr.ap-northeast-2.amazonaws.com/main-api:latest
+      - docker push 339712958286.dkr.ecr.ap-northeast-2.amazonaws.com/aggregators:latest
+      - docker push 339712958286.dkr.ecr.ap-northeast-2.amazonaws.com/auth:latest
