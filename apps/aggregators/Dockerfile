@@ -1,32 +1,33 @@
-FROM node:20.8.0 AS development
+FROM node:20-alpine AS base
 
-WORKDIR /usr/src/app
+RUN npm i -g pnpm
 
-COPY package*.json ./
+FROM base AS dependencies
 
-# Install pnpm
-RUN npm install -g pnpm
+WORKDIR /app
 
-# Install dependencies using pnpm
+COPY package.json pnpm-lock.yaml ./
+
 RUN pnpm install
 
-COPY . .
+FROM base AS build
 
-RUN pnpm run build
-
-FROM node:20.8.0 AS production
-
-ARG NODE_ENV=production
-ENV NODE_ENV=${NODE_ENV}
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-RUN pnpm install --prod
+WORKDIR /app
 
 COPY . .
 
-COPY --from=development /usr/src/app/dist ./dist
+COPY --from=dependencies /app/node_modules ./node_modules
 
-CMD ["node", "dist/apps/aggregators/main"]
+RUN pnpm build
+
+RUN pnpm prune --prod
+
+FROM base AS deploy
+
+WORKDIR /app
+
+COPY --from=build /app/dist/ ./dist/
+
+COPY --from=build /app/node_modules ./node_modules
+
+CMD [ "node", "dist/main.js" ]
