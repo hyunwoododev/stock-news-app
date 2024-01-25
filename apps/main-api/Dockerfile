@@ -1,37 +1,28 @@
-FROM node:20-alpine AS base
+FROM node:alpine As development
 
-RUN npm i -g pnpm
+WORKDIR /usr/src/app
 
-FROM base AS dependencies
+COPY package*.json ./
 
-WORKDIR /app
-
-COPY package.json pnpm-lock.yaml ./
-
-RUN pnpm install
-
-FROM base AS build
-
-WORKDIR /app
+RUN npm install
 
 COPY . .
 
-COPY --from=dependencies /app/node_modules ./node_modules
+RUN npm run build main-api
 
-RUN pnpm build
+FROM node:alpine as production
 
-RUN pnpm prune --prod
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
 
-FROM base AS deploy
+WORKDIR /usr/src/app
 
-WORKDIR /app
+COPY package*.json ./
 
-COPY --from=build /app/dist/ ./dist/
+RUN npm install --only=production
 
-COPY --from=build /app/node_modules ./node_modules
+COPY . .
 
-ENV PORT 3000
+COPY --from=development /usr/src/app/dist ./dist
 
-EXPOSE 3000
-
-CMD [ "node", "dist/main.js" ]
+CMD ["node", "dist/apps/main-api/main"]
