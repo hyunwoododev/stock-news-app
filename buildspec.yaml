@@ -12,20 +12,20 @@ phases:
     commands:
       - echo Build started on `date`
       - docker build -t main-api:production -f ./apps/main-api/Dockerfile .
-      - docker build -t aggregators:production -f ./apps/aggregators/Dockerfile .
-      - docker build -t auth:production -f ./apps/auth/Dockerfile .
+      # - docker build -t aggregators:production -f ./apps/aggregators/Dockerfile .
+      # - docker build -t auth:production -f ./apps/auth/Dockerfile .
       - echo Build completed
 
       - echo tagging docker images on `date`
       - docker tag main-api:production 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/main-api:latest
-      - docker tag aggregators:production 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/aggregators:latest
-      - docker tag auth:production 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/auth:latest
+      # - docker tag aggregators:production 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/aggregators:latest
+      # - docker tag auth:production 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/auth:latest
       - echo tagging completed
 
   post_build:
     commands:
       - echo Pushing docker images on `date`
       - docker push 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/main-api:latest 
-      - docker push 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/aggregators:latest
-      - docker push 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/auth:latest
+      # - docker push 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/aggregators:latest
+      # - docker push 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/auth:latest
       - echo Pushing docker images completed on `date`
