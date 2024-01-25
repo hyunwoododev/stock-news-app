@@ -1,21 +1,36 @@
-version: 0.1
+version: 0.2
+
+env:
+  variables:
+    AWS_DEFAULT_REGION: ap-northeast-2
 
 phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+      docker: 24
+
   pre_build:
     commands:
-      - aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 339712958286.dkr.ecr.ap-northeast-2.amazonaws.com
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
   build:
     commands:
+      - echo Build started on `date`
       - docker build -t main-api:production -f ./apps/main-api/Dockerfile .
       - docker build -t aggregators:production -f ./apps/aggregators/Dockerfile .
       - docker build -t auth:production -f ./apps/auth/Dockerfile .
+      - echo Build completed
 
-      - docker tag main-api:production 339712958286.dkr.ecr.ap-northeast-2.amazonaws.com/main-api:latest
-      - docker tag aggregators:production 339712958286.dkr.ecr.ap-northeast-2.amazonaws.com/aggregators:latest
-      - docker tag auth:production 339712958286.dkr.ecr.ap-northeast-2.amazonaws.com/auth:latest
+      - echo tagging docker images on `date`
+      - docker tag main-api:production 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/main-api:latest
+      - docker tag aggregators:production 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/aggregators:latest
+      - docker tag auth:production 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/auth:latest
+      - echo tagging completed
 
   post_build:
     commands:
-      - docker push 339712958286.dkr.ecr.ap-northeast-2.amazonaws.com/main-api:latest
-      - docker push 339712958286.dkr.ecr.ap-northeast-2.amazonaws.com/aggregators:latest
-      - docker push 339712958286.dkr.ecr.ap-northeast-2.amazonaws.com/auth:latest
+      - echo Pushing docker images on `date`
+      - docker push 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/main-api:latest 
+      - docker push 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/aggregators:latest
+      - docker push 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/auth:latest
+      - echo Pushing docker images completed on `date`

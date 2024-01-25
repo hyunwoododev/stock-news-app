@@ -30,4 +30,8 @@ COPY --from=build /app/dist/ ./dist/
 
 COPY --from=build /app/node_modules ./node_modules
 
+ENV PORT 3000
+
+EXPOSE 3000
+
 CMD [ "node", "dist/main.js" ]
