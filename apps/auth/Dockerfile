@@ -25,4 +25,6 @@ COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
 
+EXPOSE 3002
+
 CMD ["node", "dist/apps/auth/main"]
