@@ -26,14 +26,14 @@ phases:
     commands:
       - echo Pushing docker images on `date`
       - docker push 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/main-api:latest 
-      - printf '[{"name":"main-api","imageUri":"%s"}]' 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/main-api:latest > imagedefinitions.json
+      - printf '[{"name":"main-api","imageUri":"%s"}]' 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/main-api:latest > main-api.json
       # - docker push 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/aggregators:latest
       # - docker push 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/auth:latest
       - echo Pushing docker images completed on `date`
 
 artifacts: 
   files:  
-    - imagedefinitions.json 
+    - main-api.json 
 
 
 
