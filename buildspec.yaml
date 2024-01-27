@@ -25,17 +25,23 @@ phases:
   post_build:
     commands:
       - echo Pushing docker images on `date`
+      
       - docker push 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/main-api:latest 
-      - docker push 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/aggregators:latest
       - printf '[{"name":"main-api","imageUri":"%s"}]' 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/main-api:latest > main-api.json
+      
+      - docker push 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/auth:latest
+      - printf '[{"name":"auth","imageUri":"%s"}]' 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/auth:latest > auth.json
+      
+      - docker push 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/aggregators:latest
       - printf '[{"name":"aggregators","imageUri":"%s"}]' 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/aggregators:latest > aggregators.json
-      # - docker push 339712958286.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/auth:latest
+
       - echo Pushing docker images completed on `date`
 
 artifacts: 
   files:  
     - main-api.json 
     - aggregators.json
+    - auth.json
 
 
 
