@@ -9,7 +9,7 @@ export class MainApiController {
 
   @Get()
   async sayHello() {
-    return `hey, I'm main-api`;
+    return `hey, I'm main-api!`;
   }
 
   @Post('/create-news')
