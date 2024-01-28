@@ -6,14 +6,10 @@ import { CurrentUser } from './current-user.decorator';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { User } from './users/schemas/user.schema';
 import JwtAuthGuard from './guards/jwt-auth.guard';
-import { RmqService } from '@app/common';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly rmqService: RmqService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Get()
   async sayHello() {

@@ -1,10 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { RmqService } from '@app/common';
 import { AuthModule } from './auth.module';
-import { RmqOptions } from '@nestjs/microservices';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AUTH } from '@app/common/constants/services';
 
 async function bootstrap() {
   const app = await NestFactory.create(AuthModule);
@@ -13,9 +10,9 @@ async function bootstrap() {
   /**
    * RabbitMQ Microservice를 생성하고 시작
    */
-  const rmqService = app.get<RmqService>(RmqService);
-  app.connectMicroservice<RmqOptions>(rmqService.getOptions(AUTH, true));
-  await app.startAllMicroservices();
+  // const rmqService = app.get<RmqService>(RmqService);
+  // app.connectMicroservice<RmqOptions>(rmqService.getOptions(AUTH, true));
+  // await app.startAllMicroservices();
 
   /**
    * PORT 환경 변수를 사용하여 서버를 시작
