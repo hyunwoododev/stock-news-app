@@ -1,7 +1,7 @@
 # Stock news app
 
 <p align="center">
-  <img src="./concept.jpg" width="400" alt="concpet" />
+  <img src="./concept.jpg" width="1000" alt="concpet" />
 </p>
 
 ## Stay in touch
